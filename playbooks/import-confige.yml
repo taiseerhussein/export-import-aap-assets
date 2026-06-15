@@ -1,0 +1,157 @@
+---
+- name: "Playbook to upgrade CaC from AAP <= 2.4 to AAP >= 2.5 format"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    personal_access_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"
+    software_repository: https://{{ personal_access_token }}@github.com/taiseerhussein/export-import-aap-assets.git
+    local_repo: /var/tmp/github/aap24_conversion
+    git_name: taiseerhussein
+    git_email: tkhussein@yahoo.com
+
+    flatten: true
+    filetree_read_organizations: false
+    input_path: "{{ local_repo }}/{{ aap24_configs }}"
+    gateway_validate_certs: false
+  vars_files:
+    - ../var_files/platform-info.yml
+
+  pre_tasks:
+
+    - name: Determine that both AAP and Machine credentials are set
+      ansible.builtin.assert:
+        that:
+          - "lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') !=''"
+          - "lookup('ansible.builtin.env', 'CONTROLLER_HOST') !=''"
+          - "lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') !=''"
+        fail_msg:
+          - "Red Hat Ansible Automation Platform credential is not set"
+          - "Please assign correct credentials to the Job Template"
+
+    - name: Create a new token
+      ansible.controller.token:
+        controller_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+        controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
+        controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
+        validate_certs: false
+        description: Controller export
+        scope: write
+        state: present
+
+    - name: Printout my token
+      ansible.builtin.debug:
+        msg:
+          - "{{ ansible_facts['controller_token']['token'] }}"
+
+    - name: "Set the oauth token to be used since now"
+      ansible.builtin.set_fact:
+        controller_oauthtoken: "{{ ansible_facts['controller_token']['token'] }}"
+
+    - name: Set controller_validate_certs
+      ansible.builtin.set_fact:
+        controller_validate_certs: false
+
+    - name: Set controller_hostname
+      ansible.builtin.set_fact:
+        controller_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+
+    - name: Clone the software repository
+      register: clone_result
+      run_once: true
+      when: software_repository is defined
+      ansible.builtin.git:
+        repo: "{{ software_repository }}"
+        dest: "{{ local_repo }}"
+        accept_hostkey: true
+        force: true
+        version: main
+
+    - name: Load normalized variable files
+      ansible.builtin.include_vars:
+        dir: "{{ input_path }}"
+        extensions:
+          - yml
+          - yaml
+        ignore_unknown_extensions: true
+
+    - name: Remove system/default execution environments
+      ansible.builtin.set_fact:
+        controller_execution_environments: >-
+          {{
+            controller_execution_environments | default([])
+            | rejectattr('name', 'in', [
+                'Hub Default execution environment',
+                'Hub Minimal execution environment'
+                'Default execution environment',
+                'Minimal execution environment',
+                'Control Plane Execution Environment',
+                'Ansible Engine 2.9 execution environment',
+                'Automation Hub Default execution environment'
+              ])
+            | list
+          }}    
+    - name: Remove default instance group
+      ansible.builtin.set_fact:
+        controller_instance_groups: >-
+          {{
+            controller_instance_groups | default([])
+            | rejectattr('name', 'equalto', 'default')
+            | list
+          }}
+
+    - name: Remove installer-managed policy fields from instance groups
+      ansible.builtin.set_fact:
+        controller_instance_groups: >-
+          {{
+            controller_instance_groups | default([])
+            | map('dict2items')
+            | map('rejectattr', 'key', 'in', [
+                'policy_instance_percentage',
+                'policy_instance_minimum',
+                'policy_instance_list'
+              ])
+            | map('items2dict')
+            | list
+          }}
+     
+  roles:
+    - ../../roles/manage-aap-config
+
+    - role: infra.controller_configuration.execution_environments
+      when: controller_execution_environments is defined
+
+    - role: infra.controller_configuration.projects
+      when: controller_projects is defined
+
+    - role: infra.controller_configuration.inventories
+      when: controller_inventories is defined
+
+    - role: infra.controller_configuration.inventory_sources
+      when: controller_inventory_sources is defined
+
+    - role: infra.controller_configuration.hosts
+      when: controller_hosts is defined
+
+    - role: infra.controller_configuration.groups
+      when: controller_groups is defined
+
+    - role: infra.controller_configuration.job_templates
+      when: controller_templates is defined or controller_job_templates is defined
+
+    - role: infra.controller_configuration.workflow_job_templates
+      when: controller_workflows is defined or controller_workflow_job_templates is defined
+
+    - role: infra.controller_configuration.notification_templates
+      when: controller_notifications is defined or controller_notification_templates is defined
+
+    - role: infra.controller_configuration.schedules
+      when: controller_schedules is defined
+
+    # - role: infra.controller_configuration.instance_groups
+    #   when: controller_instance_groups is defined
+
+    - role: infra.controller_configuration.roles
+      when: controller_roles is defined
+    - role: infra.controller_configuration.applications
+      when: controller_applications is defined

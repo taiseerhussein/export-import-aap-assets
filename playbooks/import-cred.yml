@@ -1,0 +1,27 @@
+---
+- name: "Playbook to upgrade CaC from AAP <= 2.4 to AAP >= 2.5 format"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    personal_access_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"
+    software_repository: https://{{ personal_access_token }}@github.com/taiseerhussein/export-import-aap-assets.git
+    local_repo: /var/tmp/github/aap24_conversion
+    git_name: taiseerhussein
+    git_email: tkhussein@yahoo.com
+
+    flatten: true
+    filetree_read_organizations: false
+    input_path: "{{ local_repo }}/{{ aap24_configs }}"
+    gateway_validate_certs: false
+  vars_files:
+    - ../var_files/platform-info.yml
+        
+  roles:
+    - ../../roles/prep-env
+    - ../../roles/manage-aap-config
+    - role: infra.controller_configuration.credential_types
+      when: controller_credential_types is defined
+
+    - role: infra.controller_configuration.credentials
+      when: controller_credentials is defined
