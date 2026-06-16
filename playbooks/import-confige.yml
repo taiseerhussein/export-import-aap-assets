@@ -116,7 +116,7 @@
           }}
      
   roles:
-    - ../../roles/manage-aap-config
+    # - ../../roles/manage-aap-config
 
     - role: infra.controller_configuration.execution_environments
       when: controller_execution_environments is defined
