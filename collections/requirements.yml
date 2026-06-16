@@ -13,4 +13,3 @@ collections:
   - name: ansible.eda
   - name: ansible.hub
   - name: infra.aap_configuration
-    version: 4.2.0
