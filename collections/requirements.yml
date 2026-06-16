@@ -11,7 +11,7 @@ collections:
   - name: infra.controller_configuration
     version: 3.2.5
   - name: ansible.controller
-    version: 4.5.31
+    version: ">=4.6.0"
   - name: ansible.eda
   - name: ansible.hub
   
