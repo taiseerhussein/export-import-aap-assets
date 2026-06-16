@@ -6,13 +6,12 @@ collections:
     version: 6.0.1
   - name: ansible.platform
     version: 2.6.20260306
- 
+  - name: infra.aap_configuration
+    version: 4.2.0  
   - name: infra.controller_configuration
     version: 3.2.5
-  
+  - name: ansible.controller
+    version: ">=4.6.0"
   - name: ansible.eda
   - name: ansible.hub
-  - name: ansible.controller
-    version: 4.6.17
-  - name: infra.aap_configuration
-    version: 4.2.0
+  
