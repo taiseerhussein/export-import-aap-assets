@@ -35,7 +35,6 @@
   ansible.builtin.set_fact:
     controller_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
 
-
 - name: Clone the software repository
   register: clone_result
   run_once: true
@@ -54,9 +53,43 @@
       - yml
       - yaml
     ignore_unknown_extensions: true
-- name: Normalize credential secret values
-  ansible.builtin.replace:
-    path: "{{ input_path }}/credentials.yml"
-    regexp: '(^\s*(password|token|client_secret|ssh_key_data|secret|vault_password):\s*).*$'
-    replace: '\1"CHANGE_ME"'
-  when: lookup('ansible.builtin.fileglob', input_path ~ '/credentials.yml', errors='ignore') | length > 0
+
+- name: Remove system/default execution environments
+  ansible.builtin.set_fact:
+    controller_execution_environments: >-
+      {{
+        controller_execution_environments | default([])
+        | rejectattr('name', 'in', [
+            'Hub Default execution environment',
+            'Hub Minimal execution environment'
+            'Default execution environment',
+            'Minimal execution environment',
+            'Control Plane Execution Environment',
+            'Ansible Engine 2.9 execution environment',
+            'Automation Hub Default execution environment'
+          ])
+        | list
+      }}    
+- name: Remove default instance group
+  ansible.builtin.set_fact:
+    controller_instance_groups: >-
+      {{
+        controller_instance_groups | default([])
+        | rejectattr('name', 'equalto', 'default')
+        | list
+      }}
+
+- name: Remove installer-managed policy fields from instance groups
+  ansible.builtin.set_fact:
+    controller_instance_groups: >-
+      {{
+        controller_instance_groups | default([])
+        | map('dict2items')
+        | map('rejectattr', 'key', 'in', [
+            'policy_instance_percentage',
+            'policy_instance_minimum',
+            'policy_instance_list'
+          ])
+        | map('items2dict')
+        | list
+      }}
