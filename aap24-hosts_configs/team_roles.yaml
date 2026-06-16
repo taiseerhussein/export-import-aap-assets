@@ -1,0 +1,60 @@
+---
+controller_roles:
+  - team: "org1-admins"
+    organizations:
+      - "dev"
+      - "Org1"
+    role: "execute"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "execute"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "project_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "inventory_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "credential_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "workflow_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "notification_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "job_template_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "execution_environment_admin"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "auditor"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "read"
+  - team: "prod-admins"
+    organizations:
+      - "prod"
+    role: "approval"
+  - team: "saml-test-users"
+    job_templates:
+      - "upgrade"
+    role: "execute"
+  - team: "saml-test-users"
+    inventories:
+      - "upgrade"
+    role: "use"
+...

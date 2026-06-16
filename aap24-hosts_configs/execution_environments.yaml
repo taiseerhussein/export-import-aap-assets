@@ -1,0 +1,23 @@
+---
+controller_execution_environments:
+  - name: "Minimal execution environment"
+    description: ""
+    image: "registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest"
+    pull: ""
+    credential: "Default Execution Environment Registry Credential"
+  - name: "Default execution environment"
+    description: ""
+    image: "registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8:latest"
+    pull: ""
+    credential: "Default Execution Environment Registry Credential"
+  - name: "Control Plane Execution Environment"
+    description: ""
+    image: "registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8:latest"
+    pull: ""
+    credential: "Default Execution Environment Registry Credential"
+  - name: "upgrade-demo-ee"
+    description: ""
+    image: "registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8:latest"
+    pull: ""
+    credential: "Default Execution Environment Registry Credential"
+...

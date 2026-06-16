@@ -1,0 +1,43 @@
+---
+controller_user_accounts:
+  - username: "admin"
+    password: "INITIAL"
+    email: "admin@example.com"
+    first_name: ""
+    last_name: ""
+    auditor: "False"
+    superuser: "True"
+    update_secrets: false
+  - username: "taiseer"
+    password: "INITIAL"
+    email: ""
+    first_name: "taiseer"
+    last_name: ""
+    auditor: "False"
+    superuser: "False"
+    update_secrets: false
+  - username: "testuser"
+    password: "INITIAL"
+    email: ""
+    first_name: ""
+    last_name: ""
+    auditor: "False"
+    superuser: "False"
+    update_secrets: false
+  - username: "user2"
+    password: "INITIAL"
+    email: ""
+    first_name: ""
+    last_name: ""
+    auditor: "False"
+    superuser: "False"
+    update_secrets: false
+  - username: "produser"
+    password: "INITIAL"
+    email: ""
+    first_name: ""
+    last_name: ""
+    auditor: "False"
+    superuser: "False"
+    update_secrets: false
+...

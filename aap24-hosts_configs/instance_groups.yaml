@@ -1,0 +1,17 @@
+---
+controller_instance_groups:
+  - name: "controlplane"
+    policy_instance_minimum: "0"
+    policy_instance_percentage: "100"
+    instances:
+      - "192.168.65.4"
+  - name: "default"
+    policy_instance_minimum: "0"
+    policy_instance_percentage: "100"
+    instances:
+      - "192.168.65.4"
+  - name: "updrade-instance-group"
+    policy_instance_minimum: "0"
+    policy_instance_percentage: "0"
+    instances:
+...

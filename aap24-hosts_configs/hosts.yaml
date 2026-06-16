@@ -1,0 +1,20 @@
+---
+controller_hosts:
+  - description: ''
+    inventory: Demo Inventory
+    name: host2
+  - description: ''
+    inventory: Demo Inventory
+    name: localhost
+    variables:
+      ansible_connection: local
+      password: changeme
+      username: changeme
+  - description: ip host
+    inventory: upgrade
+    name: 10.10.10.1
+  - description: my third host
+    inventory: upgrade
+    name: host3
+    variables:
+      var1: test
