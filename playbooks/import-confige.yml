@@ -14,9 +14,6 @@
     filetree_read_organizations: false
     input_path: "{{ local_repo }}/{{ aap24_configs }}"
     gateway_validate_certs: false
-  vars_files:
-    - ../var_files/platform-info.yml
-
      
   roles:
     - ../../roles/prep-env
