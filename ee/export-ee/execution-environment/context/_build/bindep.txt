@@ -1,0 +1,4 @@
+systemd-devel
+pkgconf-pkg-config
+gcc
+python3.12-devel

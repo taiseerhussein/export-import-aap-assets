@@ -1,0 +1,7 @@
+azure-identity
+azure-mgmt-resource
+azure-mgmt-compute
+azure-mgmt-network
+azure-mgmt-postgresqlflexibleservers
+azure-core
+msrest
