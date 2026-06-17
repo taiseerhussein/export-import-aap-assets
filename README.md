@@ -158,7 +158,7 @@ The export playbook performs the following tasks:
 
 Follow the following steps on AAP 2.6 to execute the export process
 1. Create Red hat Automation platform cred as shown in the image below: 
-<img src="images/aap2.4cred" alt="AAP 2.4 cred" width="500">
+<img src="images/aap2.4cred.png" alt="AAP 2.4 cred" width="500">
 
 
 ### Required Environment Variables
