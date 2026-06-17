@@ -6,7 +6,7 @@ This repository provides a migration workflow for exporting configuration assets
 
 This solution is intended for customers who choose not to follow the supported in-place upgrade path documented by Red Hat and instead deploy a new AAP 2.6 environment alongside an existing AAP 2.4 installation.
 
-The workflow uses community-supported collections to export configuration assets from the source AAP 2.4 environment, normalize the exported data, and import it into the target AAP 2.6 environment.
+The workflow uses community collections to export configuration assets from the source AAP 2.4 environment, normalize the exported data, and import it into the target AAP 2.6 environment.
 
 All playbooks in this repository are designed to be executed as **Job Templates in AAP 2.6**. The export process connects remotely to the source AAP 2.4 Controller through the Controller API, exports the configuration, converts it into a Configuration-as-Code structure, and stores the results in a Git repository for import.
 
