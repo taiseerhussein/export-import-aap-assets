@@ -3,9 +3,9 @@
   ansible.platform.organization:
     name: "{{ item.name }}"
     description: "{{ item.description }}"
-    gateway_hostname: "{{ gateway_hostname }}"
-    gateway_username: "{{ gateway_username }}"
-    gateway_password: "{{ gateway_password }}"
+    gateway_hostname: "{{ controller_host }}"
+    gateway_username: "{{ controller_username }}"
+    gateway_password: "{{ controller_password }}"
     gateway_validate_certs: "{{ gateway_validate_certs }}"
     # state: "{{ item.state }}"
   loop: "{{ controller_organizations }}"

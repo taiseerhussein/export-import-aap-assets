@@ -14,6 +14,10 @@
     filetree_read_organizations: false
     input_path: "{{ local_repo }}/{{ aap24_configs }}"
     gateway_validate_certs: false
+    controller_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+    controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
+    controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
+    
   vars_files:
     - ../var_files/platform-info.yml
         

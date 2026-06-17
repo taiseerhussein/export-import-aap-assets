@@ -157,18 +157,13 @@ The export playbook performs the following tasks:
 * Commits and pushes exported assets to the configured Git repository
 
 Follow the following steps on AAP 2.6 to execute the export process
-1. Create Red hat Automation platform cred as shown in the image below: 
+1. Create Red Hat Automation platform cred as shown in the image below: 
 <img src="images/aap2.4cred.png" alt="AAP 2.4 cred" width="500">
-
-
-### Required Environment Variables
-
-```bash
-export CONTROLLER_HOST=https://<AAP24_CONTROLLER>
-export CONTROLLER_USERNAME=admin
-export CONTROLLER_PASSWORD='<password>'
-export GITHUB_TOKEN='<github_pat>'
-```
+2. Create a project as shown in the following image
+3. Create the export EE as shown in the following image. Please note that the image is the one you created for the export ee
+4. Create the export job-template as show in the following image. The way we provid the github token is by creating a cred type for it. Feel free to use any other method. Just be carefull that it is encrypted and not shared. 
+5. Update the survay for the job template as shown below. Please make sure that the Answer variable name matches exactly what is shown. 
+6. Once done lauch the job template. Upon successfull it will create a directory in your git repo with the AAP 2.4 assets that will be used during the import process. 
 
 ### Exported Assets
 
@@ -200,11 +195,6 @@ The export process captures assets such as:
 
 Credentials should be imported before any other assets.
 
-Run:
-
-```bash
-ansible-playbook playbooks/import-cred.yml
-```
 
 This playbook imports:
 
