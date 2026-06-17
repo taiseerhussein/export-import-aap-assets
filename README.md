@@ -201,9 +201,22 @@ Credentials should be imported before any other assets.
 
 
 This playbook imports:
-
+* Organizations
+* Teams
+* Users
 * Credential Types
 * Credentials
+
+Follow the following steps to import the cred to your AAP 2.6
+1. Create the import EE. Make sure you use the EE's image you created for the import part
+<img src="images/importee.png" alt="AAP 2.4 cred" width="500">
+2. Create Red Hat Automation Platfrom for the AAP 2.6 environment.
+<img src="images/aap2.6cred.png" alt="AAP 2.4 cred" width="500">
+3. Create the job template to import the cred type as well as the cred. The playbook will import the orgs, users, and teams first since some of the cred and org specific.
+<img src="images/credjobtemplate.png" alt="AAP 2.4 cred" width="500">
+4. Update the job template survey to include the source location of the assets, it should match the directory name you used in the export phase.
+<img src="images/credsurvey.png" alt="AAP 2.4 cred" width="500">
+5. Launch the job template. 
 
 At this stage, credential objects are created, but secret values remain empty.
 
@@ -237,17 +250,8 @@ Failure to update credential secrets may result in:
 
 After credential secrets have been updated, import the remaining configuration.
 
-Run:
-
-```bash
-ansible-playbook playbooks/import-confige.yml
-```
-
 This playbook imports:
 
-* Organizations
-* Teams
-* Users
 * Inventories
 * Hosts
 * Groups
@@ -261,26 +265,13 @@ This playbook imports:
 * Applications
 * Roles and Permissions
 
+Follow the following steps to import the rest of the assets
+1. Create a job template
+<img src="images/importassestsjobtemplate.png" alt="AAP 2.4 cred" width="500">
+2. Update the job template survey to include the source location of the assets, it should match the directory name you used in the export phase.
+<img src="images/importassetssurvey.png" alt="AAP 2.4 cred" width="500">
+3. launch the job template
 ---
-
-## Configuration
-
-The import playbooks use variables defined in:
-
-```text
-var_files/platform-info.yml
-```
-
-Update this file with the connection information for the target AAP 2.6 environment before running the import playbooks.
-
-Example:
-
-```yaml
-platform_host: https://aap26.example.com
-platform_username: admin
-platform_password: password
-validate_certs: false
-```
 
 ---
 
@@ -300,25 +291,6 @@ The account used for import should have:
 
 * Platform Administrator privileges
 * Permission to create and modify all platform resources
-
----
-
-## Recommended Migration Order
-
-Execute the migration in the following order:
-
-```bash
-# Export from AAP 2.4
-ansible-playbook playbooks/export-configs.yml
-
-# Import credential types and credentials
-ansible-playbook playbooks/import-cred.yml
-
-# Manually update credential secrets in AAP 2.6
-
-# Import remaining assets
-ansible-playbook playbooks/import-confige.yml
-```
 
 ---
 
@@ -380,37 +352,6 @@ After the migration is complete, verify:
 * [ ] Notifications tested successfully
 * [ ] Schedules reviewed and enabled
 
----
-
-## Troubleshooting
-
-### Projects Fail to Sync After Import
-
-Verify:
-
-* Source control credentials have valid secrets
-* Repository URLs are reachable
-* Execution Environments are assigned correctly
-
-### Inventory Sources Fail to Sync
-
-Verify:
-
-* Cloud credentials have been updated
-* Inventory source credentials contain valid secrets
-* External endpoints are reachable
-
-### Job Templates Fail to Launch
-
-Verify:
-
-* Credentials have been updated
-* Execution Environments exist in AAP 2.6
-* Inventories imported successfully
-
-### Workflow Templates Fail
-
-Verify all referenced job templates, inventories, credentials, and execution environments were imported successfully.
 
 ---
 
