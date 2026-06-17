@@ -267,7 +267,7 @@ This playbook imports:
 
 Follow the following steps to import the rest of the assets
 1. Create a job template
-<img src="images/importassestsjobtemplate.png" alt="AAP 2.4 cred" width="500">
+<img src="images/importassetsjobtemplate.png" alt="AAP 2.4 cred" width="500">
 2. Update the job template survey to include the source location of the assets, it should match the directory name you used in the export phase.
 <img src="images/importassetssurvey.png" alt="AAP 2.4 cred" width="500">
 3. launch the job template
