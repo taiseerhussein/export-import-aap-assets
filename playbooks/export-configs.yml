@@ -8,8 +8,7 @@
   vars:
     personal_access_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"
     software_repository: https://{{ personal_access_token }}@github.com/taiseerhussein/export-import-aap-assets.git
-    # personal_access_token: git_hub_token
-    local_repo: /var/tmp/github/aap24-config
+    local_repo: /var/tmp/github/aap24-configs
     git_name: taiseerhussein
     git_email: tkhussein@yahoo.com
     awx_or_aap: "{{ config_dir }}"
@@ -37,11 +36,6 @@
         description: Controller export
         scope: write
         state: present
-
-    # - name: Printout my token
-    #   ansible.builtin.debug:
-    #     msg:
-    #       - "{{ ansible_facts['controller_token']['token'] }}"
 
     - name: "Set the oauth token to be used since now"
       ansible.builtin.set_fact:

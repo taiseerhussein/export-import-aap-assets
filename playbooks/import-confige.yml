@@ -6,7 +6,7 @@
   vars:
     personal_access_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"
     software_repository: https://{{ personal_access_token }}@github.com/taiseerhussein/export-import-aap-assets.git
-    local_repo: /var/tmp/github/aap24_conversion
+    local_repo: /var/tmp/github/aap24_configs
     git_name: taiseerhussein
     git_email: tkhussein@yahoo.com
 
@@ -19,7 +19,6 @@
 
      
   roles:
-    #  - ../../roles/manage-aap-config
     - ../../roles/prep-env
     - role: infra.controller_configuration.execution_environments
       when: controller_execution_environments is defined
