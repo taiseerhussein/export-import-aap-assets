@@ -9,12 +9,11 @@
     personal_access_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"
     software_repository: https://{{ personal_access_token }}@github.com/taiseerhussein/export-import-aap-assets.git
     # personal_access_token: git_hub_token
-    local_repo: /var/tmp/github/aap24-configuration.kit
+    local_repo: /var/tmp/github/aap24-config
     git_name: taiseerhussein
     git_email: tkhussein@yahoo.com
     awx_or_aap: "{{ config_dir }}"
     merged_hosts_file: "{{ config_dir }}/merged/controller_hosts.yaml"
-    # /var/tmp/github/aap24-configuration.kit/aap24-hosts_configs/hosts.yaml
     hosts_file: "{{ local_repo }}/{{ awx_or_aap }}_configs/hosts.yaml"
   tasks:
 
@@ -39,10 +38,10 @@
         scope: write
         state: present
 
-    - name: Printout my token
-      ansible.builtin.debug:
-        msg:
-          - "{{ ansible_facts['controller_token']['token'] }}"
+    # - name: Printout my token
+    #   ansible.builtin.debug:
+    #     msg:
+    #       - "{{ ansible_facts['controller_token']['token'] }}"
 
     - name: "Set the oauth token to be used since now"
       ansible.builtin.set_fact:

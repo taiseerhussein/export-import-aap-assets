@@ -18,10 +18,10 @@
     scope: write
     state: present
 
-- name: Printout my token
-  ansible.builtin.debug:
-    msg:
-      - "{{ ansible_facts['controller_token']['token'] }}"
+# - name: Printout my token
+#   ansible.builtin.debug:
+#     msg:
+#       - "{{ ansible_facts['controller_token']['token'] }}"
 
 - name: "Set the oauth token to be used since now"
   ansible.builtin.set_fact:
