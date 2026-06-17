@@ -4,6 +4,8 @@
 
 This repository provides a migration workflow for exporting configuration assets from **Ansible Automation Platform (AAP) 2.4** and importing them into **AAP 2.6**.
 
+This is for those who decided not follow the supported path that was provided by Red Hat in the doc https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/upgrade-ref_upgrade_scenarios_rpm#upgrade-scenarios-rpm___rpm_based_ansible_automation_platform_2_4_on_rhel_8. Those who decided to stand a greenfiiled installation of 2.6 parallel to AAP 2.4. Hence the repo will simple use some of the comunity collectios to export the assesst then import them to AAP 2.6. 
+
 All playbooks in this repository are intended to be executed from an **AAP 2.6 environment**. The export process connects remotely to the source AAP 2.4 Controller, exports its configuration, normalizes the exported data, and prepares it for import into AAP 2.6.
 
 The migration workflow consists of the following stages:
@@ -15,7 +17,7 @@ The migration workflow consists of the following stages:
 
 ---
 
-## Supported Migration Path
+## Migration Path
 
 This repository has been developed and tested for the following migration path:
 
@@ -81,7 +83,9 @@ Requirements:
 
 ## Execution Environments
 
-This migration workflow uses two separate Execution Environments (EEs).
+This migration workflow uses two separate Execution Environments (EEs). The resaon we have two seprate EEs is to overcome any conflict of the collection versions that are required for each segment. 
+
+The repo includes the definitions of each EE under ee directory. You can use them to create the EEs images. You need to update the ansible.cfg file to add your Red Hat hub token. The token can be generated here 
 
 ### Export Execution Environment
 
@@ -93,43 +97,12 @@ The Export EE is used by `export-configs.yml` to:
 * Normalize exported data
 * Commit and push exported assets to Git
 
-Example collections:
-
-```yaml
-collections:
-  - name: ansible.posix
-  - name: ansible.utils
-  - name: ansible.controller
-  - name: infra.controller_configuration
-```
-
-The Export EE must have network connectivity to:
-
-* Source AAP 2.4 Controller
-* Git repository
-
 ### Import Execution Environment
 
 The Import EE is used by:
 
 * `import-cred.yml`
 * `import-confige.yml`
-
-Example collections:
-
-```yaml
-collections:
-  - name: ansible.platform
-  - name: ansible.controller
-  - name: ansible.eda
-  - name: ansible.hub
-```
-
-The Import EE must have network connectivity to:
-
-* Target AAP 2.6 Gateway
-* Target AAP 2.6 Controller
-* Git repository containing exported assets
 
 ### Example Execution Environment Definition
 
@@ -183,11 +156,10 @@ The export playbook performs the following tasks:
 * Converts assets into a Configuration-as-Code structure
 * Commits and pushes exported assets to the configured Git repository
 
-Run:
+Follow the following steps on AAP 2.6 to execute the export process
+1. Create Red hat Automation platform cred as shown in the image below: 
+<img src="images/aap2.4cred" alt="AAP 2.4 cred" width="500">
 
-```bash
-ansible-playbook playbooks/export-configs.yml
-```
 
 ### Required Environment Variables
 
