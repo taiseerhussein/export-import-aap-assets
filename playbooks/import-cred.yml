@@ -17,9 +17,9 @@
     controller_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
     controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
     controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
-    
-  vars_files:
-    - ../var_files/platform-info.yml
+
+  # vars_files:
+  #   - ../var_files/platform-info.yml
         
   roles:
     - ../../roles/prep-env
