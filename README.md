@@ -158,15 +158,15 @@ The export playbook performs the following tasks:
 
 Follow the following steps on AAP 2.6 to execute the export process
 1. Create Red Hat Automation platform cred as shown in the image below: 
-<img src="images/aap2.4cred.png" alt="AAP 2.4 cred" width="500">
+<img src="images/aap2.4-cred.png" alt="AAP 2.4 cred" width="500">
 2. Create a project as shown in the following image
 <img src="images/project.png" alt="AAP 2.4 cred" width="500">
 3. Create the export EE as shown in the following image. Please note that the image is the one you created for the export ee
 <img src="images/export-ee.png" alt="AAP 2.4 cred" width="500">
 4. Create the export job-template as show in the following image. The way we provid the github token is by creating a cred type for it. Feel free to use any other method. Just be carefull that it is encrypted and not shared. 
-<img src="images/exportjobtemplate.png" alt="AAP 2.4 cred" width="500">
+<img src="images/export-job-template.png" alt="AAP 2.4 cred" width="500">
 5. Update the survay for the job template as shown below. Please make sure that the Answer variable name matches exactly what is shown.
-<img src="images/exportSurvey.png" alt="AAP 2.4 cred" width="500"> 
+<img src="images/export-survey.png" alt="AAP 2.4 cred" width="500"> 
 6. Once done lauch the job template. Upon successfull it will create a directory in your git repo with the AAP 2.4 assets that will be used during the import process. 
 
 ### Exported Assets
@@ -209,13 +209,13 @@ This playbook imports:
 
 Follow the following steps to import the cred to your AAP 2.6
 1. Create the import EE. Make sure you use the EE's image you created for the import part
-<img src="images/importee.png" alt="AAP 2.4 cred" width="500">
+<img src="images/import-ee.png" alt="AAP 2.4 cred" width="500">
 2. Create Red Hat Automation Platfrom for the AAP 2.6 environment.
-<img src="images/aap2.6cred.png" alt="AAP 2.4 cred" width="500">
+<img src="images/aap2.6-cred.png" alt="AAP 2.4 cred" width="500">
 3. Create the job template to import the cred type as well as the cred. The playbook will import the orgs, users, and teams first since some of the cred and org specific.
-<img src="images/credjobtemplate.png" alt="AAP 2.4 cred" width="500">
+<img src="images/import-cred-job-template.png" alt="AAP 2.4 cred" width="500">
 4. Update the job template survey to include the source location of the assets, it should match the directory name you used in the export phase.
-<img src="images/credsurvey.png" alt="AAP 2.4 cred" width="500">
+<img src="images/cred-survey.png" alt="AAP 2.4 cred" width="500">
 5. Launch the job template. 
 
 At this stage, credential objects are created, but secret values remain empty.
@@ -267,9 +267,9 @@ This playbook imports:
 
 Follow the following steps to import the rest of the assets
 1. Create a job template
-<img src="images/importassetsjobtemplate.png" alt="AAP 2.4 cred" width="500">
+<img src="images/import-assets-job-template.png" alt="AAP 2.4 cred" width="500">
 2. Update the job template survey to include the source location of the assets, it should match the directory name you used in the export phase.
-<img src="images/importassetssurvey.png" alt="AAP 2.4 cred" width="500">
+<img src="images/import-assets-survey.png" alt="AAP 2.4 cred" width="500">
 3. launch the job template
 ---
 
