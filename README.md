@@ -4,14 +4,54 @@
 
 This repository provides a migration workflow for exporting configuration assets from **Ansible Automation Platform (AAP) 2.4** and importing them into **AAP 2.6**.
 
-The migration process is intentionally divided into multiple stages to ensure credentials are handled securely and to minimize import failures caused by missing secrets.
+All playbooks in this repository are intended to be executed from an **AAP 2.6 environment**. The export process connects remotely to the source AAP 2.4 Controller, exports its configuration, normalizes the exported data, and prepares it for import into AAP 2.6.
 
-The workflow consists of:
+The migration workflow consists of the following stages:
 
 1. Export assets from AAP 2.4
 2. Import credential types and credentials into AAP 2.6
 3. Manually update credential secrets in AAP 2.6
-4. Import the remaining configuration assets into AAP 2.6
+4. Import the remaining assets into AAP 2.6
+
+---
+
+## Supported Migration Path
+
+This repository has been developed and tested for the following migration path:
+
+| Source  | Target  |
+| ------- | ------- |
+| AAP 2.4 | AAP 2.6 |
+
+Other source or target versions may require modifications to the playbooks and are not currently validated.
+
+---
+
+## Migration Workflow
+
+```text
+AAP 2.6
+    │
+    ├── Run export-configs.yml
+    │
+    ▼
+AAP 2.4 Controller
+    │
+    ├── Export configuration
+    │
+    ▼
+Git Repository
+    │
+    ├── Review exported assets
+    │
+    ▼
+AAP 2.6
+    ├── Run import-cred.yml
+    ├── Update credential secrets
+    └── Run import-confige.yml
+```
+
+> **Important:** These playbooks are designed to run from an AAP 2.6 environment. The source AAP 2.4 instance is accessed remotely through the Controller API.
 
 ---
 
@@ -21,21 +61,97 @@ The workflow consists of:
 
 * AAP 2.4 Controller URL
 * Controller administrator credentials
-* Access to create temporary API tokens
+* Ability to create temporary API tokens
 
 ### Target Environment (AAP 2.6)
 
 * AAP 2.6 Gateway/Controller URL
-* Administrator credentials
+* Platform administrator credentials
 
-### GitHub
+### Git Repository
 
-The export process stores exported assets in a Git repository.
+The export process stores the exported assets in a Git repository.
 
-Required:
+Requirements:
 
 * GitHub Personal Access Token (PAT)
-* Access to clone and push to the repository
+* Permission to clone, commit, and push changes
+
+---
+
+## Execution Environments
+
+This migration workflow uses two separate Execution Environments (EEs).
+
+### Export Execution Environment
+
+The Export EE is used by `export-configs.yml` to:
+
+* Connect to the source AAP 2.4 Controller
+* Generate a temporary API token
+* Export assets
+* Normalize exported data
+* Commit and push exported assets to Git
+
+Example collections:
+
+```yaml
+collections:
+  - name: ansible.posix
+  - name: ansible.utils
+  - name: ansible.controller
+  - name: infra.controller_configuration
+```
+
+The Export EE must have network connectivity to:
+
+* Source AAP 2.4 Controller
+* Git repository
+
+### Import Execution Environment
+
+The Import EE is used by:
+
+* `import-cred.yml`
+* `import-confige.yml`
+
+Example collections:
+
+```yaml
+collections:
+  - name: ansible.platform
+  - name: ansible.controller
+  - name: ansible.eda
+  - name: ansible.hub
+```
+
+The Import EE must have network connectivity to:
+
+* Target AAP 2.6 Gateway
+* Target AAP 2.6 Controller
+* Git repository containing exported assets
+
+### Example Execution Environment Definition
+
+```yaml
+---
+version: 3
+
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
+
+dependencies:
+  galaxy: requirements.yml
+```
+
+### Playbook to EE Mapping
+
+| Playbook           | Execution Environment |
+| ------------------ | --------------------- |
+| export-configs.yml | Export EE             |
+| import-cred.yml    | Import EE             |
+| import-confige.yml | Import EE             |
 
 ---
 
@@ -58,13 +174,14 @@ Required:
 
 # Step 1 - Export Assets from AAP 2.4
 
-The export playbook performs the following actions:
+The export playbook performs the following tasks:
 
+* Connects to the source AAP 2.4 Controller
 * Creates a temporary Controller API token
-* Exports AAP 2.4 assets
+* Exports AAP assets
 * Normalizes exported data
-* Organizes assets into a Configuration-as-Code structure
-* Commits and pushes the exported assets to GitHub
+* Converts assets into a Configuration-as-Code structure
+* Commits and pushes exported assets to the configured Git repository
 
 Run:
 
@@ -81,7 +198,7 @@ export CONTROLLER_PASSWORD='<password>'
 export GITHUB_TOKEN='<github_pat>'
 ```
 
-### Exported Content
+### Exported Assets
 
 The export process captures assets such as:
 
@@ -103,13 +220,13 @@ The export process captures assets such as:
 * Applications
 * Roles and Permissions
 
-> **Note:** Credential secret values are never exported.
+> **Note:** Credential secret values are not exported.
 
 ---
 
 # Step 2 - Import Credentials into AAP 2.6
 
-Credentials must be imported before any other assets.
+Credentials should be imported before any other assets.
 
 Run:
 
@@ -122,7 +239,7 @@ This playbook imports:
 * Credential Types
 * Credentials
 
-At this stage, credential objects are created but their secret values are intentionally empty.
+At this stage, credential objects are created, but secret values remain empty.
 
 ---
 
@@ -144,8 +261,8 @@ This step is required before importing the remaining assets.
 Failure to update credential secrets may result in:
 
 * Project synchronization failures
-* Inventory synchronization failures
-* Job Template failures
+* Inventory source synchronization failures
+* Job template failures
 * Workflow execution failures
 
 ---
@@ -182,7 +299,7 @@ This playbook imports:
 
 ## Configuration
 
-The import playbooks use configuration values defined in:
+The import playbooks use variables defined in:
 
 ```text
 var_files/platform-info.yml
@@ -201,9 +318,28 @@ validate_certs: false
 
 ---
 
+## Required Permissions
+
+### Source AAP 2.4
+
+The account used for export should have:
+
+* System Administrator privileges
+* Permission to create API tokens
+* Read access to all assets being exported
+
+### Target AAP 2.6
+
+The account used for import should have:
+
+* Platform Administrator privileges
+* Permission to create and modify all platform resources
+
+---
+
 ## Recommended Migration Order
 
-Run the migration in the following order:
+Execute the migration in the following order:
 
 ```bash
 # Export from AAP 2.4
@@ -222,15 +358,93 @@ ansible-playbook playbooks/import-confige.yml
 
 ## Credential Handling
 
-For security reasons, AAP does not export credential secrets.
+AAP does not export credential secrets.
 
-The migration process therefore:
+As a result, the migration process:
 
-1. Creates credential objects
-2. Requires administrators to update secrets manually
-3. Imports dependent assets only after credentials are functional
+1. Exports credential metadata only
+2. Creates credential objects in AAP 2.6
+3. Requires administrators to manually populate secret values
+4. Imports dependent assets only after credentials are functional
 
-This approach ensures that sensitive information is never stored in Git repositories or exported configuration files.
+This approach prevents sensitive information from being exported or stored in source control.
+
+---
+
+## Limitations
+
+The following items are not automatically migrated:
+
+* Credential secrets
+* SSH private keys
+* Vault passwords
+* API tokens
+* OAuth tokens
+* Other encrypted credential fields
+
+These values must be manually updated in AAP 2.6 after running the credential import playbook.
+
+---
+
+## Post-Migration Validation
+
+After the migration is complete, verify:
+
+* Projects synchronize successfully
+* Inventory sources synchronize successfully
+* Credentials contain valid secret values
+* Job templates launch successfully
+* Workflow job templates execute successfully
+* Notifications function as expected
+* Scheduled jobs are present and enabled
+
+---
+
+## Migration Validation Checklist
+
+* [ ] Organizations imported successfully
+* [ ] Teams imported successfully
+* [ ] Users imported successfully
+* [ ] Credentials imported successfully
+* [ ] Credential secrets updated
+* [ ] Projects synchronized successfully
+* [ ] Inventory sources synchronized successfully
+* [ ] Job templates launched successfully
+* [ ] Workflow job templates launched successfully
+* [ ] Notifications tested successfully
+* [ ] Schedules reviewed and enabled
+
+---
+
+## Troubleshooting
+
+### Projects Fail to Sync After Import
+
+Verify:
+
+* Source control credentials have valid secrets
+* Repository URLs are reachable
+* Execution Environments are assigned correctly
+
+### Inventory Sources Fail to Sync
+
+Verify:
+
+* Cloud credentials have been updated
+* Inventory source credentials contain valid secrets
+* External endpoints are reachable
+
+### Job Templates Fail to Launch
+
+Verify:
+
+* Credentials have been updated
+* Execution Environments exist in AAP 2.6
+* Inventories imported successfully
+
+### Workflow Templates Fail
+
+Verify all referenced job templates, inventories, credentials, and execution environments were imported successfully.
 
 ---
 
@@ -238,12 +452,12 @@ This approach ensures that sensitive information is never stored in Git reposito
 
 * Review exported assets before importing into production.
 * Test the migration in a non-production environment first.
-* Verify project synchronization after credential updates.
-* Verify inventory source synchronization before running production workloads.
-* Review imported job templates and workflow job templates for environment-specific settings.
+* Environment-specific settings may require manual adjustments after import.
+* Credential secrets must be manually updated before importing dependent assets.
+* Some integrations may require endpoint or credential updates after migration.
 
 ---
 
 ## Disclaimer
 
-This repository is intended to assist with migrating configuration assets between AAP environments. Review all exported and imported content to ensure it aligns with your organization's security, compliance, and operational requirements before use in production.
+This repository is intended to assist with migrating configuration assets from AAP 2.4 to AAP 2.6. Review all exported and imported content to ensure it aligns with your organization's security, compliance, and operational requirements before use in production.
