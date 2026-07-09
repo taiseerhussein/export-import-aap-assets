@@ -22,8 +22,8 @@
     - ../../roles/prep-env-2.7
     - ../../roles/manage-aap-config-2.7
     
-    - role: infra.aap_configuration.controller_credential_types
+    - role: infra.controller_configuration.credential_types 
       when: controller_credential_types is defined
 
-    - role: infra.aap_configuration.controller_credentials
+    - role: infra.controller_configuration.credentials
       when: controller_credentials is defined
