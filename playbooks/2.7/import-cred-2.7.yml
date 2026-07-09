@@ -22,8 +22,12 @@
     - ../../roles/prep-env-2.7
     - ../../roles/manage-aap-config-2.7
     
-    - role: infra.controller_configuration.credential_types 
+    - role: infra.aap_configuration.controller_credential_types
+      vars: 
+        aap_request_timeout: 30  
       when: controller_credential_types is defined
 
-    - role: infra.controller_configuration.credentials
+    - role: infra.aap_configuration.controller_credentials
+      vars: 
+        aap_request_timeout: 30 
       when: controller_credentials is defined
