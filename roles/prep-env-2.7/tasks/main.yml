@@ -45,6 +45,10 @@
   ansible.builtin.set_fact:
     controller_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
 
+- name: Set aap_hostname
+  ansible.builtin.set_fact:
+    aap_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+
 - name: Clone the software repository
   register: clone_result
   run_once: true
