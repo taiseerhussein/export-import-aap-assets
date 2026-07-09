@@ -18,9 +18,12 @@
     controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
     controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
 
-    aap_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
-    aap_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
-    aap_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
+    
+    aap_hostname: "https://ec2-13-59-192-24.us-east-2.compute.amazonaws.com"
+    aap_username: admin
+    aap_password: "{{ aap_admin_password }}"
+    aap_validate_certs: false
+    aap_request_timeout: 30
 
   roles:
     - ../../roles/prep-env-2.7
