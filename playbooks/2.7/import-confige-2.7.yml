@@ -1,0 +1,56 @@
+---
+- name: "Playbook to upgrade CaC from AAP <= 2.4 to AAP >= 2.5 format"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    personal_access_token: "{{ lookup('ansible.builtin.env', 'GITHUB_TOKEN') }}"
+    software_repository: https://{{ personal_access_token }}@github.com/taiseerhussein/export-import-aap-assets.git
+    local_repo: /var/tmp/github/aap24_configs
+    git_name: taiseerhussein
+    git_email: tkhussein@yahoo.com
+
+    flatten: true
+    filetree_read_organizations: false
+    input_path: "{{ local_repo }}/{{ aap24_configs }}"
+    gateway_validate_certs: false
+     
+  roles:
+    - ../../roles/prep-env
+    - role: infra.controller_configuration.execution_environments
+      when: controller_execution_environments is defined
+
+    - role: infra.controller_configuration.projects
+      when: controller_projects is defined
+
+    - role: infra.controller_configuration.inventories
+      when: controller_inventories is defined
+
+    - role: infra.controller_configuration.inventory_sources
+      when: controller_inventory_sources is defined
+
+    - role: infra.controller_configuration.hosts
+      when: controller_hosts is defined
+
+    - role: infra.controller_configuration.groups
+      when: controller_groups is defined
+
+    - role: infra.controller_configuration.job_templates
+      when: controller_templates is defined or controller_job_templates is defined
+
+    - role: infra.controller_configuration.workflow_job_templates
+      when: controller_workflows is defined or controller_workflow_job_templates is defined
+
+    - role: infra.controller_configuration.notification_templates
+      when: controller_notifications is defined or controller_notification_templates is defined
+
+    - role: infra.controller_configuration.schedules
+      when: controller_schedules is defined
+
+    # - role: infra.controller_configuration.instance_groups
+    #   when: controller_instance_groups is defined
+
+    - role: infra.controller_configuration.roles
+      when: controller_roles is defined
+    - role: infra.controller_configuration.applications
+      when: controller_applications is defined
