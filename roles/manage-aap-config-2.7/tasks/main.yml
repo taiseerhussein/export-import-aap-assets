@@ -7,7 +7,7 @@
     gateway_username: "{{ controller_username }}"
     gateway_password: "{{ controller_password }}"
     gateway_validate_certs: "{{ gateway_validate_certs }}"
-    aap_request_timeout: 30
+    gateway_request_timeout: 30.0
     # state: "{{ item.state }}"
   loop: "{{ controller_organizations }}"
 
@@ -20,7 +20,7 @@
     gateway_username: "{{ controller_username }}"
     gateway_password: "{{ controller_password }}"
     gateway_validate_certs: "{{ gateway_validate_certs }}"
-    aap_request_timeout: 30
+    gateway_request_timeout: 30.0
     # state: "{{ item.state }}"
   loop: "{{ controller_teams }}"
 
@@ -38,6 +38,6 @@
     gateway_username: "{{ controller_username }}"
     gateway_password: "{{ controller_password }}"
     gateway_validate_certs: "{{ gateway_validate_certs }}"
-    aap_request_timeout: 30
+    gateway_request_timeout: 30.0
   loop: "{{ controller_user_accounts }}"
     
