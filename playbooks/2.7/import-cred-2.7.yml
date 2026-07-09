@@ -18,6 +18,10 @@
     controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
     controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
 
+    aap_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
+    aap_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
+    aap_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
+
   roles:
     - ../../roles/prep-env-2.7
     - ../../roles/manage-aap-config-2.7
