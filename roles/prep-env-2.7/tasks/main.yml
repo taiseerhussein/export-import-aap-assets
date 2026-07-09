@@ -31,7 +31,7 @@
 
 - name: "Set the oauth token to be used since now"
   ansible.builtin.set_fact:
-    controller_oauthtoken: "{{ ansible_facts['controller_token']['token'] }}"
+    controller_oauthtoken: "{{ ansible_facts['aap_token']['token'] }}"
 
 - name: Set controller_validate_certs
   ansible.builtin.set_fact:
