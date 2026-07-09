@@ -37,6 +37,10 @@
   ansible.builtin.set_fact:
     controller_validate_certs: false
 
+- name: Set aap_token
+  ansible.builtin.set_fact:
+    aap_token: "{{ ansible_facts['aap_token']['token'] }}"
+
 - name: Set controller_hostname
   ansible.builtin.set_fact:
     controller_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
