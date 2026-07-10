@@ -26,6 +26,10 @@
     aap_validate_certs: false
     aap_request_timeout: 30
 
+  pre_tasks:
+    - name: Check credential type data
+      ansible.builtin.debug:
+        var: controller_credential_types
   roles:
     - ../../roles/prep-env-2.7
     - ../../roles/manage-aap-config-2.7
