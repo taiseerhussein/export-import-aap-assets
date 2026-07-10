@@ -107,3 +107,7 @@
         | map('items2dict')
         | list
       }}
+
+- name: Check credential type data
+  ansible.builtin.debug:
+    var: controller_credential_types
