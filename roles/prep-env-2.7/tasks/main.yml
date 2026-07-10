@@ -108,6 +108,20 @@
         | list
       }}
 
+- name: Show files loaded by include_vars
+  ansible.builtin.debug:
+    var: loaded_configuration.ansible_included_var_files
+
+- name: Show credential-related variable names
+  ansible.builtin.debug:
+    msg: >-
+      {{
+        vars.keys()
+        | select('search', 'credential')
+        | sort
+        | list
+      }}
+      
 - name: Check credential type data
   ansible.builtin.debug:
     var: controller_credential_types
