@@ -67,6 +67,7 @@
       - yml
       - yaml
     ignore_unknown_extensions: true
+  register: loaded_configuration
 
 - name: Remove system/default execution environments
   ansible.builtin.set_fact:
@@ -121,7 +122,7 @@
         | sort
         | list
       }}
-      
+
 - name: Check credential type data
   ansible.builtin.debug:
     var: controller_credential_types
