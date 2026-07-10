@@ -8,15 +8,6 @@
       - "Red Hat Ansible Automation Platform credential is not set"
       - "Please assign correct credentials to the Job Template"
 
-# - name: Create a new token
-#   ansible.controller.token:
-#     controller_host: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
-#     controller_username: "{{ lookup('ansible.builtin.env', 'CONTROLLER_USERNAME') }}"
-#     controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
-#     validate_certs: false
-#     description: Controller export
-#     scope: write
-#     state: present
     
 - name: Create a new token
   ansible.platform.token:
@@ -68,6 +59,21 @@
       - yaml
     ignore_unknown_extensions: true
   register: loaded_configuration
+
+- name: Check credential types inside loading role
+  ansible.builtin.debug:
+    msg:
+      direct_variable: "{{ controller_credential_types | default('NOT DEFINED') }}"
+      registered_value: >-
+        {{
+          loaded_configuration.ansible_facts.controller_credential_types
+          | default('NOT IN REGISTERED RESULT')
+        }}
+      hostvar_value: >-
+        {{
+          hostvars[inventory_hostname].controller_credential_types
+          | default('NOT IN HOSTVARS')
+        }}
 
 - name: Remove system/default execution environments
   ansible.builtin.set_fact:
