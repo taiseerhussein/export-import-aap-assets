@@ -60,20 +60,30 @@
     ignore_unknown_extensions: true
   register: loaded_configuration
 
-- name: Check credential types inside loading role
+- name: Preserve imported credential types
+  ansible.builtin.set_fact:
+    imported_controller_credential_types: >-
+      {{
+        hostvars[inventory_hostname]['controller_credential_types']
+        | default([])
+      }}
+
+- name: Validate imported credential types
+  ansible.builtin.assert:
+    that:
+      - imported_controller_credential_types | length > 0
+    fail_msg: >-
+      controller_credential_types was not available in hostvars for
+      {{ inventory_hostname }}.
+
+- name: Show imported credential type names
   ansible.builtin.debug:
-    msg:
-      direct_variable: "{{ controller_credential_types | default('NOT DEFINED') }}"
-      registered_value: >-
-        {{
-          loaded_configuration.ansible_facts.controller_credential_types
-          | default('NOT IN REGISTERED RESULT')
-        }}
-      hostvar_value: >-
-        {{
-          hostvars[inventory_hostname].controller_credential_types
-          | default('NOT IN HOSTVARS')
-        }}
+    msg: >-
+      {{
+        imported_controller_credential_types
+        | map(attribute='name')
+        | list
+      }}
 
 - name: Remove system/default execution environments
   ansible.builtin.set_fact:
