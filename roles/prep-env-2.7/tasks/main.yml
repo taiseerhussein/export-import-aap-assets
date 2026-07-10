@@ -111,3 +111,7 @@
 - name: Check credential type data
   ansible.builtin.debug:
     var: controller_credential_types
+
+- name: Check cred data
+  ansible.builtin.debug:
+    var: controller_credentials 
