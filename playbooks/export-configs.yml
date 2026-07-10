@@ -125,12 +125,12 @@
         replace: 'Default'
       loop: "{{ normalized_yaml_files.files  }}"
 
-    - name: Remove inline !unsafe tag
-      ansible.builtin.replace:
-        path: "{{ item.path }}"
-        regexp: '!unsafe\s*'
-        replace: ''
-      loop: "{{ normalized_yaml_files.files }}"
+    # - name: Remove inline !unsafe tag
+    #   ansible.builtin.replace:
+    #     path: "{{ item.path }}"
+    #     regexp: '!unsafe\s*'
+    #     replace: ''
+    #   loop: "{{ normalized_yaml_files.files }}"
     - name: Find exported host files
       ansible.builtin.find:
         paths: "{{ local_repo }}/{{ awx_or_aap }}_configs"
