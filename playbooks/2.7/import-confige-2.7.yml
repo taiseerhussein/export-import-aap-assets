@@ -27,7 +27,7 @@
     aap_request_timeout: 30
      
   roles:
-    - ../../roles/prep-env
+    - ../../roles/prep-env-2.7
     - role: infra.controller_configuration.execution_environments
       when: controller_execution_environments is defined
 
