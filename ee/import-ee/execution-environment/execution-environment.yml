@@ -12,6 +12,8 @@ dependencies:
     - pkgconf-pkg-config
     - gcc
     - python3.12-devel
+    - python3-pip
+    - libxml2-devel
 additional_build_files:
   - src: ansible.cfg
     dest: configs

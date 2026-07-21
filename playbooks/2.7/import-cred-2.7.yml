@@ -19,7 +19,7 @@
     controller_password: "{{ lookup('ansible.builtin.env', 'CONTROLLER_PASSWORD') }}"
 
     
-    aap_hostname: "https://ec2-13-59-192-24.us-east-2.compute.amazonaws.com"
+    aap_hostname: "{{ lookup('ansible.builtin.env', 'CONTROLLER_HOST') }}"
     aap_username: admin
     aap_password: "{{ aap_admin_password }}"
     aap_token: "{{ aap_token }}"
