@@ -29,39 +29,63 @@
   roles:
     - ../../roles/prep-env-2.7
     - role: infra.controller_configuration.execution_environments
+      vars: 
+        aap_request_timeout: 30
       when: controller_execution_environments is defined
 
     - role: infra.controller_configuration.projects
+      vars: 
+        aap_request_timeout: 30
       when: controller_projects is defined
 
     - role: infra.controller_configuration.inventories
+      vars: 
+        aap_request_timeout: 30
       when: controller_inventories is defined
 
     - role: infra.controller_configuration.inventory_sources
+      vars: 
+        aap_request_timeout: 30
       when: controller_inventory_sources is defined
 
     - role: infra.controller_configuration.hosts
+      vars: 
+        aap_request_timeout: 30
       when: controller_hosts is defined
 
     - role: infra.controller_configuration.groups
+      vars: 
+        aap_request_timeout: 30
       when: controller_groups is defined
 
     - role: infra.controller_configuration.job_templates
+      vars: 
+        aap_request_timeout: 30
       when: controller_templates is defined or controller_job_templates is defined
 
     - role: infra.controller_configuration.workflow_job_templates
+      vars: 
+        aap_request_timeout: 30
       when: controller_workflows is defined or controller_workflow_job_templates is defined
 
     - role: infra.controller_configuration.notification_templates
+      vars: 
+        aap_request_timeout: 30
       when: controller_notifications is defined or controller_notification_templates is defined
 
     - role: infra.controller_configuration.schedules
+      vars: 
+        aap_request_timeout: 30
       when: controller_schedules is defined
 
     # - role: infra.controller_configuration.instance_groups
     #   when: controller_instance_groups is defined
 
     - role: infra.controller_configuration.roles
+      vars: 
+        aap_request_timeout: 30
       when: controller_roles is defined
     - role: infra.controller_configuration.applications
+      vars: 
+        aap_request_timeout: 30
       when: controller_applications is defined
