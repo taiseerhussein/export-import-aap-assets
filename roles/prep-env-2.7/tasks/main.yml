@@ -122,7 +122,7 @@
     imported_controller_schedules: >-
       {{
         controller_schedules
-        | rejectattr('unified_job_template', 'in', [
+        | rejectattr('name', 'in', [
             'Cleanup Job Details',
             'Cleanup Activity Stream',
             'Cleanup Expired Sessions',
