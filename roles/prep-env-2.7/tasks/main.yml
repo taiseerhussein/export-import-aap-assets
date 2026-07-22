@@ -121,7 +121,7 @@
   ansible.builtin.set_fact:
     imported_controller_schedules: >-
       {{
-        controller_schedules
+        controller_schedules | default([])
         | rejectattr('name', 'in', [
             'Cleanup Job Details',
             'Cleanup Activity Stream',
