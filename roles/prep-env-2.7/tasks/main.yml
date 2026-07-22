@@ -117,6 +117,20 @@
         | list
       }}
 
+- name: Remove default system schedules
+  ansible.builtin.set_fact:
+    imported_controller_schedules: >-
+      {{
+        controller_schedules
+        | rejectattr('unified_job_template', 'in', [
+            'Cleanup Job Details',
+            'Cleanup Activity Stream',
+            'Cleanup Expired Sessions',
+            'Cleanup Expired OAuth 2 Tokens'
+          ])
+        | list
+      }}
+
 - name: Check credential type data
   ansible.builtin.debug:
     var: controller_credential_types
