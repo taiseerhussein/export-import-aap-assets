@@ -119,7 +119,7 @@
 
 - name: Remove default system schedules
   ansible.builtin.set_fact:
-    imported_controller_schedules: >-
+    controller_schedules: >-
       {{
         controller_schedules | default([])
         | rejectattr('name', 'in', [
