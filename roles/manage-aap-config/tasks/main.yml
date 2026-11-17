@@ -20,8 +20,9 @@
     gateway_password: "{{ controller_password }}"
     gateway_validate_certs: "{{ gateway_validate_certs }}"
     # state: "{{ item.state }}"
+  when: controller_teams is defined
   loop: "{{ controller_teams }}"
-  when: controller_teams | length > 0
+  
 
 - name: Create a user
   ansible.platform.user:
