@@ -21,6 +21,7 @@
     gateway_validate_certs: "{{ gateway_validate_certs }}"
     # state: "{{ item.state }}"
   loop: "{{ controller_teams }}"
+  when: controller_teams | length > 0
 
 - name: Create a user
   ansible.platform.user:
