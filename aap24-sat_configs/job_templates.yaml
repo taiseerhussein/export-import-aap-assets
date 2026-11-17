@@ -668,7 +668,7 @@ controller_templates:
     diff_mode: false
     webhook_service: ""
     prevent_instance_group_fallback: false
-  - name: "SATELLITE / Delete host(s) in "node_group""
+  - name: "SATELLITE / Delete host(s) in node_group"
     description: ""
     organization: "Default"
     project: "Automated Management"
