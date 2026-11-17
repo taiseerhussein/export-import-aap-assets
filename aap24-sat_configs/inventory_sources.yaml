@@ -1,0 +1,336 @@
+---
+controller_inventory_sources:
+  - name: "CentOS7 Development"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: CentOS7
+        tag:Environment: Dev
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+        ansible_user: '''ec2-user'''
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "CentOS7 Production"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: CentOS7
+        tag:Environment: Prod
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      - tag:Name
+      - private-dns-name
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+        ansible_user: '''ec2-user'''
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "CentOS7 QA"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: CentOS7
+        tag:Environment: QA
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+        ansible_user: '''ec2-user'''
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "OL7 Development"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: OL7
+        tag:Environment: Dev
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+        ansible_user: '''ec2-user'''
+        ansible_python_interpreter: '''/usr/bin/python'''
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "OL7 Production"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: OL7
+        tag:Environment: Prod
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      - tag:Name
+      - private-dns-name
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+        ansible_user: '''ec2-user'''
+        ansible_python_interpreter: '''/usr/bin/python'''
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "OL7 QA"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: OL7
+        tag:Environment: QA
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+        ansible_user: '''ec2-user'''
+        ansible_python_interpreter: '''/usr/bin/python'''
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "RHEL7 Development"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: RHEL7
+        tag:Environment: Dev
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "RHEL7 Production"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: RHEL7
+        tag:Environment: Prod
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      - tag:Name
+      - private-dns-name
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "RHEL7 QA"
+    description: ""
+    organization: "Default"
+    source: "ec2"
+    limit: ""
+    source_path: ""
+    source_vars:
+      regions:
+      - us-east-2
+      filters:
+        tag:ContentView: RHEL7
+        tag:Environment: QA
+        tag:Student: ansible-1
+        tag:guid: dmcft
+      hostnames:
+      - tag:NodeName
+      keyed_groups:
+      - prefix: cv
+        key: tags['ContentView']
+      - key: tags['ContentView'] ~ '_' ~ tags['Environment']
+        separator: ''
+      - prefix: os
+        key: tags['satellite_operatingsystem_name']
+      - key: tags['app_stack_name'] ~ '_' ~ tags['AnsibleGroup']
+        separator: ''
+      compose:
+        ansible_host: private_ip_address
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "satellite_source"
+    description: ""
+    organization: "Default"
+    source: "satellite6"
+    limit: ""
+    source_path: ""
+    source_vars:
+      keyed_groups:
+      - prefix: env
+        key: satellite_content_facet_attributes.lifecycle_environment_name
+      - prefix: cv
+        key: satellite_content_facet_attributes.content_view_name
+      - prefix: os
+        key: satellite_operatingsystem_name
+    inventory: "EC2 Dynamic Inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+    credential: "Inventory Credential"
+  - name: "inventory_centos7_dev.aws_ec2"
+    description: ""
+    organization: "Default"
+    source: "scm"
+    limit: ""
+    source_project: "Automated Management"
+    source_path: "inventory/inventory_centos7_dev.aws_ec2.yml"
+    inventory: "EXAMPLE dynamic project inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "inventory_ol7_dev.aws_ec2"
+    description: ""
+    organization: "Default"
+    source: "scm"
+    limit: ""
+    source_project: "Automated Management"
+    source_path: "inventory/inventory_ol7_dev.aws_ec2.yml"
+    inventory: "EXAMPLE dynamic project inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+  - name: "inventory_rhel7_dev.aws_ec2"
+    description: ""
+    organization: "Default"
+    source: "scm"
+    limit: ""
+    source_project: "Automated Management"
+    source_path: "inventory/inventory_rhel7_dev.aws_ec2.yml"
+    inventory: "EXAMPLE dynamic project inventory"
+    update_on_launch: "False"
+    overwrite: "True"
+...

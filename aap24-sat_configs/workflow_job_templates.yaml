@@ -1,0 +1,759 @@
+---
+controller_workflows:
+  - name: "CONVERT2RHEL / 01 Analysis"
+    description: !unsafe 'Workflow for Snapshot and Pre-conversion analysis of EL systems'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "UTILITY / Clear yum cache"
+        workflow_job_template: "CONVERT2RHEL / 01 Analysis"
+        unified_job_template: "UTILITY / Clear yum cache"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "UTILITY / Snapshot Instance"
+      - identifier: "UTILITY / Snapshot Instance"
+        workflow_job_template: "CONVERT2RHEL / 01 Analysis"
+        unified_job_template: "UTILITY / Snapshot Instance"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "OS / Pre-conversion Analysis"
+      - identifier: "OS / Pre-conversion Analysis"
+        workflow_job_template: "CONVERT2RHEL / 01 Analysis"
+        unified_job_template: "OS / Pre-conversion Analysis"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+    ask_variables_on_launch: "True"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: true
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars:
+      org_id: Default_Organization
+      convert_convert2rhel_opts: --no-rpm-va
+      convert_reboot_requested: True
+      lvm_snapshots_action: create
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: !unsafe "Select EL Group to analyze"
+          question_description: !unsafe "Use to limit job to hosts that are members of the selected host group."
+      description: ""
+  - name: "CONVERT2RHEL / 02 Convert"
+    description: !unsafe 'Workflow for Snapshot and Conversion of EL systems'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "UTILITY / Clear yum cache"
+        workflow_job_template: "CONVERT2RHEL / 02 Convert"
+        unified_job_template: "UTILITY / Clear yum cache"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "UTILITY / Snapshot Instance"
+      - identifier: "UTILITY / Snapshot Instance"
+        workflow_job_template: "CONVERT2RHEL / 02 Convert"
+        unified_job_template: "UTILITY / Snapshot Instance"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "OS / Convert to RHEL7"
+      - identifier: "OS / Convert to RHEL7"
+        workflow_job_template: "CONVERT2RHEL / 02 Convert"
+        unified_job_template: "OS / Convert to RHEL7"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+    ask_variables_on_launch: "True"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: true
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars:
+      org_id: Default_Organization
+      convert_convert2rhel_opts: --no-rpm-va
+      convert_convert2rhel_env_vars: {'CONVERT2RHEL_INCOMPLETE_ROLLBACK': 1, 'CONVERT2RHEL_OUTDATED_PACKAGE_CHECK_SKIP': 1, 'CONVERT2RHEL_ALLOW_OLDER_VERSION': 1}
+      convert_reboot_requested: True
+      lvm_snapshots_action: create
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: !unsafe "Select EL Group to convert"
+          question_description: !unsafe "Use to limit job to hosts that are members of the selected host group."
+      description: ""
+  - name: "CONVERT2RHEL / 03 Rollback"
+    description: !unsafe 'Revert node workflow - selection via dynamic inventory group'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "UTILITY / Snapshot Instance"
+        workflow_job_template: "CONVERT2RHEL / 03 Rollback"
+        unified_job_template: "UTILITY / Snapshot Instance"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "SERVER / Update content host system facts on Satellite"
+      - identifier: "SERVER / Update content host system facts on Satellite"
+        workflow_job_template: "CONVERT2RHEL / 03 Rollback"
+        unified_job_template: "SERVER / Update content host system facts on Satellite"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: true
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars:
+      snapshot_set_name: snap01
+      snapshot_create_boot_backup: True
+      lvm_snapshots_action: revert
+      org_id: Default_Organization
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: !unsafe "Select inventory group"
+      description: ""
+  - name: "CONVERT2RHEL / 04 Commit"
+    description: !unsafe 'Workflow for Snapshot delete and Update instance tags'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "UTILITY / Snapshot Instance"
+        workflow_job_template: "CONVERT2RHEL / 04 Commit"
+        unified_job_template: "UTILITY / Snapshot Instance"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "EC2 / Set instance tags based on Satellite facts"
+      - identifier: "EC2 / Set instance tags based on Satellite facts"
+        workflow_job_template: "CONVERT2RHEL / 04 Commit"
+        unified_job_template: "EC2 / Set instance tags based on Satellite facts"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "CentOS7 Development"
+      - identifier: "CentOS7 Development"
+        workflow_job_template: "CONVERT2RHEL / 04 Commit"
+        unified_job_template: "CentOS7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "OL7 Development"
+      - identifier: "OL7 Development"
+        workflow_job_template: "CONVERT2RHEL / 04 Commit"
+        unified_job_template: "OL7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "RHEL7 Development"
+      - identifier: "RHEL7 Development"
+        workflow_job_template: "CONVERT2RHEL / 04 Commit"
+        unified_job_template: "RHEL7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: true
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars:
+      lvm_snapshots_action: remove
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: !unsafe "Select inventory group"
+      description: ""
+  - name: "Z / SETUP / Insights"
+    description: !unsafe 'Configures Insights for this workshop'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "INSIGHTS / Replace Satellite Manifest"
+        workflow_job_template: "Z / SETUP / Insights"
+        unified_job_template: "Z / INSIGHTS / Replace Satellite Manifest"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "SERVER / RHEL7 - Register"
+      - identifier: "SERVER / RHEL7 - Register"
+        workflow_job_template: "Z / SETUP / Insights"
+        unified_job_template: "SERVER / RHEL7 - Register"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "INSIGHTS / Install and Register"
+      - identifier: "INSIGHTS / Install and Register"
+        workflow_job_template: "Z / SETUP / Insights"
+        unified_job_template: "Z / INSIGHTS / Install and Register"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "INSIGHTS / Create Insights Credential"
+      - identifier: "INSIGHTS / Create Insights Credential"
+        workflow_job_template: "Z / SETUP / Insights"
+        unified_job_template: "Z / INSIGHTS / Create Insights Credential"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "INSIGHTS / Create Insights Project"
+      - identifier: "INSIGHTS / Create Insights Project"
+        workflow_job_template: "Z / SETUP / Insights"
+        unified_job_template: "Z / INSIGHTS / Create Insights Project"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: false
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars:
+      manifest_name: smrtmgmt-wrksp
+      offline_token: value
+      rhsm_org_id: value
+      redhat_portal_username: username
+      redhat_portal_password: password
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: text
+          required: False
+          variable: PREFIX
+          question_name: !unsafe "Server Name or Pattern"
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: env
+          question_name: !unsafe "Choose Environment"
+      description: ""
+  - name: "Z / SETUP / Workshop - CentOS7"
+    description: !unsafe 'Workflow for workshop deployment with CentOS7 nodes'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "RHEL7 Development inventory source"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "RHEL7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "CentOS7 Development inventory source"
+      - identifier: "EC2 Instance action - stop CentOS7 nodes"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "EC2 / Instance action"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          instance_action: stop
+          content_view: CentOS7
+          stage: Dev
+      - identifier: "Workflow node delay"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "UTILITY / Workflow node delay"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "True"
+        success_nodes:
+          - "Register RHEL7 nodes to Satellite AK RHEL7_Dev"
+      - identifier: "CentOS system mods"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "Z / SETUP / CentOS system mods"
+        limit: "node4.example.com,node5.example.com,node6.example.com"
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Setup Cockpit Web Console"
+      - identifier: "Promote Content View"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "SATELLITE / RHEL - Promote Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          content_view: RHEL7
+          current_lifecycle_environment: RHEL7_Dev
+          lifecycle_environment: RHEL7_QA
+        success_nodes:
+          - "Publish Content View 2"
+      - identifier: "Satellite Performance Tuning"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "SATELLITE / Performance Tuning"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Disable transparent huge pages on Satellite"
+      - identifier: "Setup Cockpit Web Console"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "Z / SETUP / Cockpit - Web Console"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Extend partition and resize physical volume"
+      - identifier: "Publish Content View 2"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "SATELLITE / RHEL - Publish Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          env: Dev
+          content_view: RHEL7
+        success_nodes:
+          - "EC2 Instance action - stop CentOS7 nodes"
+      - identifier: "Extend partition and resize physical volume"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "UTILITY / Extend partition and resize physical volume"
+        limit: "centos7,rhel7"
+        organization: "Default"
+        all_parents_must_converge: "False"
+        always_nodes:
+          - "Workflow node delay"
+          - "Register CentOS7 nodes to Satellite AK CentOS7_Dev"
+      - identifier: "Publish Content View 1"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "SATELLITE / RHEL - Publish Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          env: Dev
+          content_view: RHEL7
+        success_nodes:
+          - "Promote Content View"
+      - identifier: "Extend logical volumes and filesystems"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "UTILITY / Extend logical volumes and filesystems"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          dynamic_inventory_group: all
+        success_nodes:
+          - "Setup miscellaneous host configuration"
+      - identifier: "Set instance tags based on Satellite facts"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "EC2 / Set instance tags based on Satellite facts"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "RHEL7 Development inventory source"
+      - identifier: "CentOS7 Development inventory source"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "CentOS7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Extend logical volumes and filesystems"
+      - identifier: "Register RHEL7 nodes to Satellite AK RHEL7_Dev"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "SERVER / RHEL7 - Register via Satellite API"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "True"
+        extra_data:
+          PREFIX: node
+          env: Dev
+        success_nodes:
+          - "Set instance tags based on Satellite facts"
+      - identifier: "Satellite CaC - CENTOS7_to_RHEL7"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "Z / CaC / Satellite / C2R - RIPU scenario"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          satellite_cac_scenario: CENTOS7_to_RHEL7
+        success_nodes:
+          - "Satellite CaC - RHEL7_to_RHEL8"
+      - identifier: "Satellite CaC - RHEL7_to_RHEL8"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "Z / CaC / Satellite / C2R - RIPU scenario"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          satellite_cac_scenario: RHEL7_to_RHEL8
+        success_nodes:
+          - "Workflow node delay"
+          - "Register CentOS7 nodes to Satellite AK CentOS7_Dev"
+      - identifier: "Disable transparent huge pages on Satellite"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "Z / SETUP / Disable transparent hugepages"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Satellite CaC - CENTOS7_to_RHEL7"
+      - identifier: "Setup miscellaneous host configuration"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "Z / SETUP / Miscellaneous host config"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          dynamic_inventory_group: aws_ec2
+        success_nodes:
+          - "Publish Content View 1"
+      - identifier: "Register CentOS7 nodes to Satellite AK CentOS7_Dev"
+        workflow_job_template: "Z / SETUP / Workshop - CentOS7"
+        unified_job_template: "SERVER / CentOS7 - Register via Satellite API"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "True"
+        extra_data:
+          PREFIX: node
+          env: Dev
+        success_nodes:
+          - "Set instance tags based on Satellite facts"
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: false
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars: ""
+    survey_enabled: false
+  - name: "Z / SETUP / Workshop - OL7"
+    description: !unsafe 'Workflow for workshop deployment with OracleLinux7 nodes'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "EC2 Instance action - stop OL7 nodes"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "EC2 / Instance action"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          instance_action: stop
+          content_view: OL7
+          stage: Dev
+      - identifier: "Extend partition and resize physical volume"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "UTILITY / Extend partition and resize physical volume"
+        limit: "oracle7,rhel7"
+        organization: "Default"
+        all_parents_must_converge: "False"
+        always_nodes:
+          - "Register RHEL7 nodes to Satellite AK RHEL7_Dev"
+          - "Set OL7 EC2 instance tags"
+      - identifier: "Set instance tags based on Satellite facts"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "EC2 / Set instance tags based on Satellite facts"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "RHEL7 Development inventory source"
+      - identifier: "Publish Content View 1"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "SATELLITE / RHEL - Publish Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          env: Dev
+          content_view: RHEL7
+        success_nodes:
+          - "Promote Content View"
+      - identifier: "RHEL7 Development inventory source"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "RHEL7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "OL7 Development inventory source"
+      - identifier: "Disable transparent huge pages on Satellite"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "Z / SETUP / Disable transparent hugepages"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Satellite CaC - ORACLE7_to_RHEL7"
+      - identifier: "Extend logical volumes and filesystems"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "UTILITY / Extend logical volumes and filesystems"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          dynamic_inventory_group: all
+        always_nodes:
+          - "Register OL7 nodes to Satellite"
+      - identifier: "Promote Content View"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "SATELLITE / RHEL - Promote Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          content_view: RHEL7
+          current_lifecycle_environment: RHEL7_Dev
+          lifecycle_environment: RHEL7_QA
+        success_nodes:
+          - "Publish Content View 2"
+      - identifier: "Satellite CaC - RHEL7_to_RHEL8"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "Z / CaC / Satellite / C2R - RIPU scenario"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          satellite_cac_scenario: RHEL7_to_RHEL8
+        success_nodes:
+          - "Register RHEL7 nodes to Satellite AK RHEL7_Dev"
+          - "Set OL7 EC2 instance tags"
+      - identifier: "Setup miscellaneous host configuration"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "Z / SETUP / Miscellaneous host config"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          dynamic_inventory_group: aws_ec2
+        success_nodes:
+          - "Publish Content View 1"
+      - identifier: "Satellite CaC - ORACLE7_to_RHEL7"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "Z / CaC / Satellite / C2R - RIPU scenario"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          satellite_cac_scenario: ORACLE7_to_RHEL7
+        success_nodes:
+          - "Satellite CaC - RHEL7_to_RHEL8"
+      - identifier: "Satellite Performance Tuning"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "SATELLITE / Performance Tuning"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Disable transparent huge pages on Satellite"
+      - identifier: "Register RHEL7 nodes to Satellite AK RHEL7_Dev"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "SERVER / RHEL7 - Register"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "True"
+        extra_data:
+          PREFIX: node
+          env: Dev
+        success_nodes:
+          - "Set instance tags based on Satellite facts"
+      - identifier: "Publish Content View 2"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "SATELLITE / RHEL - Publish Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          env: Dev
+          content_view: RHEL7
+        success_nodes:
+          - "EC2 Instance action - stop OL7 nodes"
+      - identifier: "Register OL7 nodes to Satellite"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "UTILITY / Register OracleLinux7 node"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          dynamic_inventory_group: OL7_Dev
+        success_nodes:
+          - "Setup miscellaneous host configuration"
+      - identifier: "OL7 Development inventory source"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "OL7 Development"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Extend logical volumes and filesystems"
+      - identifier: "Setup Cockpit Web Console"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "Z / SETUP / Cockpit - Web Console"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        success_nodes:
+          - "Extend partition and resize physical volume"
+      - identifier: "Set OL7 EC2 instance tags"
+        workflow_job_template: "Z / SETUP / Workshop - OL7"
+        unified_job_template: "EC2 / Set instance tag - OracleLinux7"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "True"
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: false
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars: ""
+    survey_enabled: false
+  - name: "Z / Start workshop instances"
+    description: !unsafe 'Workflow for workshop instance startup'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "EC2 Instance action - start RHEL7 nodes"
+        workflow_job_template: "Z / Start workshop instances"
+        unified_job_template: "EC2 / Instance action"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          instance_action: start
+          content_view: RHEL7
+          stage: Dev
+      - identifier: "EC2 Instance action - start Satellite node"
+        workflow_job_template: "Z / Start workshop instances"
+        unified_job_template: "EC2 / Instance action"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          instance_action: start
+          content_view: RHEL7
+          stage: Dev
+          instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'satellite'}}
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: false
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars: ""
+    survey_enabled: false
+  - name: "Z / Content View Publish and Promote"
+    description: !unsafe 'Workflow for CV testing'
+    organization: "Default"
+    simplified_workflow_nodes:
+      - identifier: "Publish Content View 1"
+        workflow_job_template: "Z / Content View Publish and Promote"
+        unified_job_template: "SATELLITE / RHEL - Publish Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          env: Dev
+          content_view: RHEL7
+        success_nodes:
+          - "Promote Content View"
+      - identifier: "Promote Content View"
+        workflow_job_template: "Z / Content View Publish and Promote"
+        unified_job_template: "SATELLITE / RHEL - Promote Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          content_view: RHEL7
+          current_lifecycle_environment: RHEL7_Dev
+          lifecycle_environment: RHEL7_QA
+        success_nodes:
+          - "Publish Content View 2"
+      - identifier: "Publish Content View 2"
+        workflow_job_template: "Z / Content View Publish and Promote"
+        unified_job_template: "SATELLITE / RHEL - Publish Content View"
+        limit: ""
+        organization: "Default"
+        all_parents_must_converge: "False"
+        extra_data:
+          env: Dev
+          content_view: RHEL7
+    ask_variables_on_launch: "False"
+    allow_simultaneous: "False"
+    scm_branch: ""
+    limit: ""
+    ask_limit_on_launch: false
+    ask_inventory_on_launch: false
+    webhook_service: ""
+    extra_vars: ""
+    survey_enabled: false
+...

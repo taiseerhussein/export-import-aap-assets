@@ -1,0 +1,3649 @@
+---
+controller_templates:
+  - name: "Z / CaC / Controller"
+    description: "Z / CaC / Controller"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "setup_controller.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Controller Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      controller_configuration_projects_async_delay: 5
+      controller_configuration_projects_async_retries: 60
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "auto_satellite controller iac execution environment"
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / CaC / Satellite"
+    description: "Z / CaC / Satellite"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "setup_satellite.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      refresh_satellite_manifest: False
+      bulk_load_size: 1000
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "auto_satellite controller iac execution environment"
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / RHEL7 - Register via Satellite API"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "server_register_via_api.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "localhost,rhel7"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      el_distribution: RHEL7
+      organization: Default Organization
+      location: Default Location
+      rhsm_enabled_repos:
+        - rhel-7-server-rpms
+        - rhel-7-server-extras-rpms
+        - rhel-7-server-satellite-client-6-rpms
+      include_offset_task_delay: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: text
+          required: False
+          variable: PREFIX
+          question_name: 'Server Name or Pattern'
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: env
+          question_name: 'Choose Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / RHEL7 - Register"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "server_register.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "rhel7"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_id: Default_Organization
+      rhsm_enabled_repos:
+        - rhel-7-server-rpms
+        - rhel-7-server-extras-rpms
+        - rhel-7-server-satellite-client-6-rpms
+      include_offset_task_delay: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: text
+          required: False
+          variable: PREFIX
+          question_name: 'Server Name or Pattern'
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: env
+          question_name: 'Choose Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / CentOS7 - Register via Satellite API"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "server_register_via_api.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "localhost,centos7"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      el_distribution: CentOS7
+      organization: Default Organization
+      location: Default Location
+      include_offset_task_delay: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: text
+          required: False
+          variable: PREFIX
+          question_name: 'Server Name or Pattern'
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: env
+          question_name: 'Choose Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / CentOS7 - Register"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "server_register.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "centos7"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_id: Default_Organization
+      product_name_or_regex: Community Enterprise OS 7
+      include_offset_task_delay: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: text
+          required: False
+          variable: PREFIX
+          question_name: 'Server Name or Pattern'
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: env
+          question_name: 'Choose Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / RHEL - Publish Content View"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_publish.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      env: Dev
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7"
+            - !unsafe "RHEL8"
+          required: True
+          variable: content_view
+          question_name: 'Select Content View'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / CentOS - Publish Content View"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_publish.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      env: Dev
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7"
+          required: True
+          variable: content_view
+          question_name: 'Select Content View'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / RHEL - Promote Content View"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_promote.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7"
+            - !unsafe "RHEL8"
+          required: True
+          variable: content_view
+          question_name: 'Select Content View'
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+          required: True
+          variable: current_lifecycle_environment
+          question_name: 'Current Lifecycle Environment'
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+          required: True
+          variable: lifecycle_environment
+          question_name: 'Next Lifecycle Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / CentOS - Promote Content View"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_promote.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7"
+          required: True
+          variable: content_view
+          question_name: 'Select Content View'
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+          required: True
+          variable: current_lifecycle_environment
+          question_name: 'Current Lifecycle Environment'
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+          required: True
+          variable: lifecycle_environment
+          question_name: 'Next Lifecycle Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Delete host(s) in "node_group""
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_delete_host.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      node_group: env_CentOS7_Dev
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Refresh manifest"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_manifest_refresh.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Resume paused tasks"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "satellite_hammer_task_resume.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Resource Info"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "query_satellite_resource_info_survey.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "organizations"
+            - !unsafe "locations"
+            - !unsafe "subscriptions"
+            - !unsafe "capsules"
+            - !unsafe "hosts"
+            - !unsafe "content_views"
+            - !unsafe "lifecycle_environments"
+            - !unsafe "activation_keys"
+            - !unsafe "repositories"
+            - !unsafe "list_all_options"
+          required: True
+          variable: resource_info_survey
+          question_name: 'Satellite resource info type'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Performance Tuning"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "setup_satellite_tuning.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / Register"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "server_register_dynamic_inv.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_id: Default_Organization
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / Unregister"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "server_unregister.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_id: Default_Organization
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "OS / Patch OS to latest"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "server_patch.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: true
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      include_startup_delay: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+            - !unsafe "all"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+        - type: multiplechoice
+          choices:
+            - !unsafe "yes"
+            - !unsafe "no"
+          default: !unsafe "yes"
+          required: False
+          variable: include_kernel_updates
+          question_name: 'Include kernel updates? (Kernel update will result in system reboot)'
+        - type: multiplechoice
+          choices:
+            - !unsafe "yes"
+            - !unsafe "no"
+          default: !unsafe "no"
+          required: False
+          variable: update_check_only
+          question_name: 'Check for updates only? Do not patch at this time?'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / Fact Scan"
+    description: ""
+    organization: "Default"
+    project: "Fact Scan"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "scan_facts.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: true
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / Start node via ec2_node_tools"
+    description: "Start node - selection via EC2 instance tags"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "node_startup.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "control"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / Stop node via ec2_node_tools"
+    description: "Stop node - selection via EC2 instance tags"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "node_shutdown.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "control"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Snapshot Instance"
+    description: "Node snapshot actions - selection via dynamic inventory group"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "snapshot_instance_lvm.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      snapshot_set_name: snap01
+      snapshot_create_snapshot_autoextend_threshold: 70
+      snapshot_create_snapshot_autoextend_percent: 20
+      snapshot_create_boot_backup: True
+      snapshot_create_volumes:
+        - {'vg': 'VolGroup00', 'lv': 'rootVol', 'size': '3G'}
+        - {'vg': 'VolGroup00', 'lv': 'varVol', 'size': '5G'}
+        - {'vg': 'VolGroup00', 'lv': 'logVol', 'size': '500M'}
+        - {'vg': 'VolGroup00', 'lv': 'auditVol', 'size': '100M'}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+        - type: multiplechoice
+          choices:
+            - !unsafe "check"
+            - !unsafe "create"
+            - !unsafe "revert"
+            - !unsafe "remove"
+          required: True
+          variable: lvm_snapshots_action
+          question_name: 'Snapshot action'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Expand logical volume and associated filesystem"
+    description: "Expand logical volume - selection via dynamic inventory group"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "extend_lvm.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      volume_group_name: VolGroup00
+      logical_volume_name: varVol
+      extend_logical_volume_mb: 1024
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Clear yum cache"
+    description: "Take node snapshot - selection via dynamic inventory group"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "clear_yum_cache.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Register OracleLinux7 node"
+    description: "Register OracleLinux7 node to Satellite"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "c2r_research.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      satellite_organization: Default_Organization
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "OS / Pre-conversion Analysis"
+    description: "Pre-conversion analysis of EL systems for RHEL7 conversion target"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "c2r_analysis.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_id: Default_Organization
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select EL Group to analyze'
+          question_description: !unsafe "Use to limit job to hosts that are members of the selected host group."
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+          required: True
+          variable: rhel_lifecycle_environment
+          question_name: 'Select RHEL Lifecycle Environment to use for analysis'
+          question_description: !unsafe "Select RHEL Lifecycle Environment to use during ConvertRHEL pre-conversion analysis."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "OS / Convert to RHEL7"
+    description: "Convert EL OS to RHEL OS via targetted LE"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "c2r_convert.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_id: Default_Organization
+      convert_convert2rhel_opts: --no-rpm-va
+      convert_convert2rhel_env_vars: {'CONVERT2RHEL_INCOMPLETE_ROLLBACK': 1, 'CONVERT2RHEL_OUTDATED_PACKAGE_CHECK_SKIP': 1, 'CONVERT2RHEL_ALLOW_OLDER_VERSION': 1}
+      convert_reboot_requested: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select EL Group to convert'
+          question_description: !unsafe "Use to limit job to selected inventory host group."
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+          required: True
+          variable: rhel_lifecycle_environment
+          question_name: 'Select target RHEL Lifecycle Environment to convert to'
+          question_description: !unsafe "Specify RHEL Lifecycle Environment for conversion RPM package sources."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "CONVERT2RHEL / 98 - Three Tier App deployment"
+    description: "Deploy three tier app"
+    organization: "Default"
+    project: "Three Tier App"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "Configure_3TA_AWS_research.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      pg_db_name: db01
+      pg_db_user: user01
+      pg_db_passwd: Xtr4Sup3rS3cr3tP4ssw0rd?!
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "stack01"
+            - !unsafe "stack02"
+          required: True
+          variable: app_stack_name
+          question_name: 'Choose application stack name'
+          question_description: !unsafe "Selection of specific application stack name."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "CONVERT2RHEL / 99 - Three Tier App smoke test"
+    description: "Smoke test three tier app"
+    organization: "Default"
+    project: "Three Tier App"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "SmokeTest_3TA_AWS.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      pg_db_name: db01
+      pg_db_user: user01
+      pg_db_passwd: Xtr4Sup3rS3cr3tP4ssw0rd?!
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "three tier app execution environment"
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "stack01"
+            - !unsafe "stack02"
+          required: True
+          variable: app_stack_name
+          question_name: 'Choose application stack name'
+          question_description: !unsafe "Selection of specific application stack name."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "ZZ / UTILITY / Take EC2 EBS snapshot of node"
+    description: "Take node snapshot - selection via EC2 instance tags"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "snapshot_instance_ec2.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "control"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'short_name': 'node*', 'guid': 'dmcft', 'Student': 'ansible-1'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "ZZ / UTILITY / Revert node EC2 EBS snapshot"
+    description: "Revert snapshot - selection via EC2 instance tags"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "snapshot_revert_ec2.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "control"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'username': 'ec2-user'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "ZZ / UTILITY / Delete node EC2 EBS snapshot"
+    description: "Delete snapshot - selection via EC2 snapshot tags"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "snapshot_delete_ec2.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "control"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      snapshots: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Set instance tags based on Satellite facts"
+    description: "Set instance tags - selection via existing EC2 instance tags"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "query_satellite_resource_info_hosts_set_instance_tags.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Set instance tag - RHEL"
+    description: "Set instance tag - app_stack_name and groups provided via extra_vars dict"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "set_instance_tags.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+      group_tag_map: {'node1.example.com': 'frontends', 'node2.example.com': 'apps', 'node3.example.com': 'appdbs'}
+      app_stack_name: stack01
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Set instance tag - CentOS"
+    description: "Set instance tag - app_stack_name and groups provided via extra_vars dict"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "set_instance_tags.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+      group_tag_map: {'node4.example.com': 'frontends', 'node5.example.com': 'apps', 'node6.example.com': 'appdbs'}
+      app_stack_name: stack02
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Set instance tag - OracleLinux7"
+    description: "Set instance tag - app_stack_name and groups provided via extra_vars dict"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "set_instance_tags_ol7.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+      environment_tag_map: {'node4.example.com': 'Dev', 'node5.example.com': 'Dev', 'node6.example.com': 'Dev'}
+      group_tag_map: {'node4.example.com': 'frontends', 'node5.example.com': 'apps', 'node6.example.com': 'appdbs'}
+      app_stack_name: stack02
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Get instance details via ec2_node_tools role"
+    description: "Utilize ec2_node_tools role to display info available per instance/node"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "node_details_via_ec2_node_tools.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'guid': 'dmcft', 'Student': 'ansible-1', 'short_name': 'node*'}}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Update Route53"
+    description: "Update Route53 records with external IPs"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "refresh_route53_dns.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'Workshop': 'dmcft'}}
+      student: ansible-1
+      workshop_dns_zone: sandbox213.opentlc.com
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "CONTROLLER / Update inventories via dynamic sources"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "controller_inventory_source_update.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Controller Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7"
+            - !unsafe "RHEL8"
+            - !unsafe "CentOS7"
+            - !unsafe "OL7"
+          required: True
+          variable: content_view
+          question_name: 'Select inventory to update'
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: env
+          question_name: 'Choose Environment'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / SETUP / Cockpit - Web Console"
+    description: "Install and configure Cockpit Web Console for all nodes"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "setup_cockpit.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      instances: {'tags': {'Workshop': 'dmcft'}}
+      student: ansible-1
+      workshop_dns_zone: sandbox213.opentlc.com
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / INSIGHTS / Replace Satellite Manifest"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "insights_replace_satellite_manifest.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      manifest_name: smrtmgmt-wrksp
+      offline_token: value
+      rhsm_org_id: value
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / INSIGHTS / Install and Register"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "insights_install.yml"
+    scm_branch: ""
+    forks: 0
+    limit: "rhel"
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / INSIGHTS / Create Insights Credential"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "insights_setup_aap_creds.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Controller Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      redhat_portal_username: username
+      redhat_portal_password: password
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "Insights execution environment"
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / INSIGHTS / Create Insights Project"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "insights_create_insights_project.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Controller Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    execution_environment: "Insights execution environment"
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "OS / Leapp / Remediation"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "leapp_remediate.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "OS / Convert2RHEL / Post-Remediation"
+    description: "Perform post conversion OS remediations for three tier app"
+    organization: "Default"
+    project: "Three Tier App"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "ConversionPostgres_3TA_AWS_research.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "stack01"
+            - !unsafe "stack02"
+          required: True
+          variable: app_stack_name
+          question_name: 'Choose application stack name'
+          question_description: !unsafe "Selection of specific application stack name."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / CaC / Satellite / C2R - RIPU scenario"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "setup_satellite_via_varsfiles.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      refresh_satellite_manifest: False
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CENTOS7_to_RHEL7"
+            - !unsafe "ORACLE7_to_RHEL7"
+            - !unsafe "RHEL7_to_RHEL8"
+            - !unsafe "RHEL8_to_RHEL9"
+          required: True
+          variable: satellite_cac_scenario
+          question_name: 'Choose RHEL conversion-upgrade scenario to prepare on Satellite'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / CaC / Controller / C2R - RIPU scenario"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "setup_controller_via_varsfiles.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Controller Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      controller_configuration_async_retries: 72
+      controller_configuration_async_delay: 5
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "CentOS7_C2R"
+            - !unsafe "RHEL8"
+            - !unsafe "RHEL9"
+          required: True
+          variable: controller_cac_scenario
+          question_name: 'Choose C2R/RIPU version to prepare on Controller'
+          question_description: !unsafe "Select Convert2RHEL, RHEL8, or RHEL9 CaC scenario"
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Extend partition and resize physical volume"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "partition_lvm_resize.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      full_storage_device_name: /dev/nvme0n1
+      perform_resize: True
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Extend logical volumes and filesystems"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "filesystem_extend.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      filesystem_extend_volumes:
+        - {'vg': 'VolGroup00', 'lv': 'varVol', 'size': '8G'}
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+            - !unsafe "all"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+          question_description: !unsafe "Use to limit job to selected inventory host group."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / SETUP / Miscellaneous host config"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "misc_host_config.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+            - !unsafe "aws_ec2"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / SETUP / CentOS system mods"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "centos_system_mods.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "Z / SETUP / Disable transparent hugepages"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "disable_transparent_hugepages.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      HOSTS: satellite.example.com
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "UTILITY / Workflow node delay"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "workflow_node_delay.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Controller Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      workflow_node_delay_in_seconds: 30
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: false
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "EC2 / Instance action"
+    description: "Perform EC2 instance actions - instance details, start, or stop"
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "Workshop Inventory"
+    playbook: "ec2_instance_action.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: true
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      ec2_region: us-east-2
+      x_vars_guid: dmcft
+      x_vars_Student: ansible-1
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "instance_details"
+            - !unsafe "start"
+            - !unsafe "stop"
+          required: True
+          variable: instance_action
+          question_name: 'Select EC2 instance action'
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7"
+            - !unsafe "RHEL8"
+            - !unsafe "CentOS7"
+            - !unsafe "OL7"
+          required: True
+          variable: content_view
+          question_name: 'Select OS target'
+        - type: multiplechoice
+          choices:
+            - !unsafe "Dev"
+            - !unsafe "QA"
+            - !unsafe "Prod"
+          required: True
+          variable: stage
+          question_name: 'Select Environment stage'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Query for content host configuration details"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "query_satellite_resource_info_hosts_display_content_details.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_name: Default Organization
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+          question_description: !unsafe "Use to limit job to selected inventory host group."
+        - type: text
+          required: False
+          variable: inventory_host_limit
+          question_name: 'Enter list of specific content hosts to limit to delimited by commas'
+          question_description: !unsafe "Use to limit job to specified content hosts that are members of inventory host group, leave blank for no limit."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SATELLITE / Change content source for content host"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "satellite_node_change_content_source.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Satellite Credential"
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: false
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    extra_vars:
+      org_name: Default Organization
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+          question_description: !unsafe "Use to limit job to selected inventory host group."
+        - type: text
+          required: False
+          variable: inventory_host_limit
+          question_name: 'Enter list of specific content hosts to limit to delimited by commas'
+          question_description: !unsafe "Use to limit job to specified content hosts that are members of inventory host group, leave blank for no limit."
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+          required: True
+          variable: target_lifecycle_environment
+          question_name: 'Select target lifecycle environment for content host'
+          question_description: !unsafe "Lifecycle environment for content host to be changed to."
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+  - name: "SERVER / Update content host system facts on Satellite"
+    description: ""
+    organization: "Default"
+    project: "Automated Management"
+    inventory: "EC2 Dynamic Inventory"
+    playbook: "subman_facts_update.yml"
+    scm_branch: ""
+    forks: 0
+    limit: ""
+    verbosity: 0
+    job_type: "run"
+    job_slice_count: 1
+    use_fact_cache: false
+    credentials:
+      - "Workshop Credential"
+    allow_simultaneous: false
+    ask_scm_branch_on_launch: false
+    ask_diff_mode_on_launch: false
+    ask_tags_on_launch: false
+    ask_skip_tags_on_launch: false
+    ask_job_type_on_launch: false
+    ask_verbosity_on_launch: false
+    ask_variables_on_launch: false
+    ask_inventory_on_launch: false
+    ask_limit_on_launch: true
+    ask_credential_on_launch: false
+    ask_execution_environment_on_launch: false
+    ask_labels_on_launch: false
+    ask_forks_on_launch: false
+    ask_job_slice_count_on_launch: false
+    ask_timeout_on_launch: false
+    ask_instance_groups_on_launch: false
+    job_tags: ""
+    force_handlers: false
+    skip_tags: ""
+    start_at_task: ""
+    timeout: 0
+    host_config_key: ""
+    notification_templates_error:
+      - "Telemetry"
+    notification_templates_started:
+      - "Telemetry"
+    notification_templates_success:
+      - "Telemetry"
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      spec:
+        - type: multiplechoice
+          choices:
+            - !unsafe "RHEL7_Dev"
+            - !unsafe "RHEL7_QA"
+            - !unsafe "RHEL7_Prod"
+            - !unsafe "RHEL8_Dev"
+            - !unsafe "RHEL8_QA"
+            - !unsafe "RHEL8_Prod"
+            - !unsafe "CentOS7_Dev"
+            - !unsafe "CentOS7_QA"
+            - !unsafe "CentOS7_Prod"
+            - !unsafe "OL7_Dev"
+            - !unsafe "OL7_QA"
+            - !unsafe "OL7_Prod"
+            - !unsafe "all"
+          required: True
+          variable: dynamic_inventory_group
+          question_name: 'Select inventory group'
+      description: ""
+    become_enabled: false
+    diff_mode: false
+    webhook_service: ""
+    prevent_instance_group_fallback: false
+...

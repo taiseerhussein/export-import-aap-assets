@@ -1,0 +1,17 @@
+---
+controller_inventories:
+  - name: "Workshop Inventory"
+    description: ""
+    organization: "Default"
+    host_filter: ""
+    prevent_instance_group_fallback: False
+  - name: "EC2 Dynamic Inventory"
+    description: ""
+    organization: "Default"
+    host_filter: ""
+    prevent_instance_group_fallback: False
+  - name: "EXAMPLE dynamic project inventory"
+    description: ""
+    organization: "Default"
+    host_filter: ""
+    prevent_instance_group_fallback: False

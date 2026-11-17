@@ -1,0 +1,53 @@
+---
+controller_groups:
+  - name: "centos"
+    description: ""
+    inventory: "Workshop Inventory"
+    variables:
+      ansible_user: ec2-user
+    hosts:
+      - node4.example.com
+      - node5.example.com
+      - node6.example.com
+  - name: "centos7"
+    description: ""
+    inventory: "Workshop Inventory"
+    hosts:
+      - node4.example.com
+      - node5.example.com
+      - node6.example.com
+  - name: "control"
+    description: ""
+    inventory: "Workshop Inventory"
+    hosts:
+      - ansible-1.example.com
+  - name: "node"
+    description: ""
+    inventory: "Workshop Inventory"
+    hosts:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com
+      - node4.example.com
+      - node5.example.com
+      - node6.example.com
+  - name: "rhel"
+    description: ""
+    inventory: "Workshop Inventory"
+    hosts:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com
+  - name: "rhel7"
+    description: ""
+    inventory: "Workshop Inventory"
+    hosts:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com
+  - name: "satellite"
+    description: ""
+    inventory: "Workshop Inventory"
+    hosts:
+      - satellite.example.com
+...

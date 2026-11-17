@@ -1,0 +1,18 @@
+---
+controller_notifications:
+  - name: "Telemetry"
+    organization: "Default"
+    notification_type: "webhook"
+    notification_configuration:
+      url: "https://script.google.com/macros/s/AKfycbzxUObvCJ6ZbzfJyicw4RvxlGE3AZdrK4AR5-TsedCYd7O-rtTOVjvsRvqyb3rx6B0g8g/exec"
+      headers: {}
+      password: ""
+      username: ""
+      http_method: "POST"
+      disable_ssl_verification: false
+    messages:
+      error: null
+      started: null
+      success: null
+      workflow_approval: null
+...

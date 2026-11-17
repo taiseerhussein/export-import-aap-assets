@@ -1,0 +1,38 @@
+---
+controller_hosts:
+  - description: ''
+    inventory: Workshop Inventory
+    name: ansible-1.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: node1.example.com
+    variables:
+      ansible_host: node1.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: node2.example.com
+    variables:
+      ansible_host: node2.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: node3.example.com
+    variables:
+      ansible_host: node3.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: node4.example.com
+    variables:
+      ansible_host: node4.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: node5.example.com
+    variables:
+      ansible_host: node5.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: node6.example.com
+    variables:
+      ansible_host: node6.example.com
+  - description: ''
+    inventory: Workshop Inventory
+    name: satellite.example.com
